@@ -43,6 +43,7 @@ RUN cd /opt && \
     tar xvzf osa-CentOS_7.5.1804_x86_64.tar.gz && \
     rm -fv  osa-CentOS_7.5.1804_x86_64.tar.gz
 
+RUN wget https://www.isdc.unige.ch/integral/download/osa/cat/osa_cat-41.0.tar.gz && tar xvzf osa_cat-41.0.tar.gz
 
 ADD init.sh init.sh
 
