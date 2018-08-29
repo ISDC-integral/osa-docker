@@ -1,3 +1,5 @@
+export HOME=/home/integral
+
 export HEADAS=/opt/heasoft/x86_64-unknown-linux-gnu-libc2.17/
 source $HEADAS/headas-init.sh
 
@@ -10,4 +12,5 @@ export ISDC_ENV=/opt/osa11
 source $ISDC_ENV/bin/isdc_init_env.sh
 
 source /opt/root/bin/thisroot.sh
+
 
