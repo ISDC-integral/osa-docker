@@ -1,3 +1,8 @@
+COMMAND=$@
+
+echo "REP_BASE_PROD: ${REP_BASE_PROD:?}"
+echo "CURRENT_IC: ${CURRENT_IC:?}"
+
 mkdir -pv /tmp/osa-home-$$
 mkdir -pv /tmp/osa-home-$$-pfiles
 
@@ -9,4 +14,4 @@ docker run \
     -v $REP_BASE_PROD:/data/rep_base_prod \
     -v $CURRENT_IC:/data/current_ic \
     --rm -it --user $(id -u) \
-        integralsw/osa:11.0 bash -c 'export HOME=/home/integral; source init.sh; ibis_science_analysis'
+        integralsw/osa:11.0 bash -c "export HOME=/home/integral; source init.sh; $COMMAND"
