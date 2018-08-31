@@ -23,7 +23,6 @@ docker run \
     --rm -it  --user $(id -u) \
         integralsw/osa:11.0 bash -c "
 
-cat init.sh
 . init.sh
 
 cd \$HOME
