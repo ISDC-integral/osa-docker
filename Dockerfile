@@ -36,10 +36,10 @@ RUN cd /opt && \
     pwd && \
     rm -fv  heasoft-CentOS_7.5.1804_x86_64.tar.gz
 
-# OSA
+# OSA 
 
 RUN cd /opt && \
-    wget https://www.isdc.unige.ch/~savchenk/gitlab-ci/savchenk/osa-build-binary-tarball/CentOS_7.5.1804_x86_64/osa-CentOS_7.5.1804_x86_64.tar.gz && \
+    wget https://www.isdc.unige.ch/~savchenk/gitlab-ci/savchenk/osa-build-binary-tarball/CentOS_7.5.1804_x86_64/11.0/osa-build-binary-tarball.latest/osa-CentOS_7.5.1804_x86_64.tar.gz && \
     tar xvzf osa-CentOS_7.5.1804_x86_64.tar.gz && \
     rm -fv  osa-CentOS_7.5.1804_x86_64.tar.gz
 
