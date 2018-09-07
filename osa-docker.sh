@@ -5,11 +5,15 @@
 COMMAND=$@
 
 echo "REP_BASE_PROD: ${REP_BASE_PROD:?please set this variable to the current data location}"
-echo "CURRENT_IC: ${CURRENT_IC:?please set this variable to the current IC location}"
-
+echo "CURRENT_IC: ${CURRENT_IC:?please set this variable to the current IC location (could be REP_BASE_PROD, but we would not like to assume...)}"
 echo "using WORKDIR: ${WORKDIR:=$PWD}"
 
-mkdir -pv $WORKDIR
+for directory in "$REP_BASE_PROD/scw" "$REP_BASE_PROD/aux" "$CURRENT_IC/ic" "$CURRENT_IC/idx" "$WORKDIR"; do
+    [ -d $directory ] || { echo "directory \"$directory\" should exist"; exit 1; }
+done
+
+[ -s /tmp/.X11-unix ] || { echo "no /tmp/.X11-unix? no X? not allowed!"; }
+
 mkdir -pv $WORKDIR/pfiles
 
 docker run \
