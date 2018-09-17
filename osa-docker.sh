@@ -4,9 +4,20 @@
 
 COMMAND=$@
 
+
+echo "OSA_DOCKER_IMAGE == ${OSA_DOCKER_IMAGE:=integralsw/osa:11.0}"
+echo "OSA_DOCKER_PULL == \"${OSA_DOCKER_PULL:=yes}\""
+[ "$OSA_DOCKER_PULL" ==  "yes" ] && {
+    echo "will update image (set OSA_DOCKER_PULL to anything but \"yes\" to stop this)"
+    docker pull $OSA_DOCKER_IMAGE
+}
+
+echo "."
+echo "."
 echo "REP_BASE_PROD: ${REP_BASE_PROD:?please set this variable to the current data location}"
 echo "CURRENT_IC: ${CURRENT_IC:?please set this variable to the current IC location (could be REP_BASE_PROD, but we would not like to assume...)}"
 echo "using WORKDIR: ${WORKDIR:=$PWD}"
+
 
 for directory in "$REP_BASE_PROD/scw" "$REP_BASE_PROD/aux" "$CURRENT_IC/ic" "$CURRENT_IC/idx" "$WORKDIR"; do
     [ -d $directory ] || { echo "directory \"$directory\" should exist"; exit 1; }
