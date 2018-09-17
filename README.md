@@ -9,7 +9,7 @@ export REP_BASE_PROD=/isdc/arc/rev_3/
 
 useful single-line command, also disabling automatic image pull:
 
-```
+```bash
 OSA_DOCKER_PULL=no \
 REP_BASE_PROD=/mnt/sshfs/isdc/isdc/arc/rev_3/ \
 CURRENT_IC=/mnt/sshfs/isdc/isdc/arc/rev_3/ \
