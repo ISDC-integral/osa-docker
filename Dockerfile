@@ -38,10 +38,12 @@ RUN cd /opt && \
 
 # OSA 
 
+ARG OSA_VERSION=11.0-beta-1-g553922fd-20181005-101240
+
 RUN cd /opt && \
-    wget https://www.isdc.unige.ch/~savchenk/gitlab-ci/savchenk/osa-build-binary-tarball/CentOS_7.5.1804_x86_64/11.0/osa-build-binary-tarball.latest/osa-CentOS_7.5.1804_x86_64.tar.gz && \
-    tar xvzf osa-CentOS_7.5.1804_x86_64.tar.gz && \
-    rm -fv  osa-CentOS_7.5.1804_x86_64.tar.gz
+    wget https://www.isdc.unige.ch/~savchenk/gitlab-ci/savchenk/osa-build-binary-tarball/CentOS_7.5.1804_x86_64/${OSA_VERSION}/build-latest/osa-${OSA_VERSION}-CentOS_7.5.1804_x86_64.tar.gz && \
+    tar xvzf osa-${OSA_VERSION}-CentOS_7.5.1804_x86_64.tar.gz && \
+    rm -fv osa-${OSA_VERSION}-CentOS_7.5.1804_x86_64.tar.gz
 
 RUN wget https://www.isdc.unige.ch/integral/download/osa/cat/osa_cat-41.0.tar.gz && \
     tar xvzf osa_cat-41.0.tar.gz && \
