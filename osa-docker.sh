@@ -36,7 +36,7 @@ docker run \
     -v $CURRENT_IC/ic:/data/ic:ro \
     -v $CURRENT_IC/idx:/data/idx:ro \
     --rm -it  --user $(id -u) \
-        integralsw/osa:11.0 bash -c "
+        ${OSA_DOCKER_IMAGE} bash -c "
 
 . init.sh
 

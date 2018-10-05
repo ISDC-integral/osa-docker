@@ -38,7 +38,7 @@ RUN cd /opt && \
 
 # OSA 
 
-ARG OSA_VERSION=11.0-beta-1-g553922fd-20181005-101240
+ARG OSA_VERSION
 
 RUN cd /opt && \
     wget https://www.isdc.unige.ch/~savchenk/gitlab-ci/savchenk/osa-build-binary-tarball/CentOS_7.5.1804_x86_64/${OSA_VERSION}/build-latest/osa-${OSA_VERSION}-CentOS_7.5.1804_x86_64.tar.gz && \
