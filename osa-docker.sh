@@ -5,7 +5,8 @@
 COMMAND=$@
 
 
-echo "OSA_DOCKER_IMAGE == ${OSA_DOCKER_IMAGE:=integralsw/osa:latest}"
+echo "OSA_VERSION == ${OSA_VERSION:=latest}"
+echo "OSA_DOCKER_IMAGE == ${OSA_DOCKER_IMAGE:=integralsw/osa:${OSA_VERSION}}"
 echo "OSA_DOCKER_PULL == \"${OSA_DOCKER_PULL:=yes}\""
 [ "$OSA_DOCKER_PULL" ==  "yes" ] && {
     echo "will update image (set OSA_DOCKER_PULL to anything but \"yes\" to stop this)"
