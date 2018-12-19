@@ -40,24 +40,26 @@ RUN cd /opt && \
 
 ARG OSA_VERSION
 
-RUN cd /opt && \
+RUN cd /opt/ && \
     if [ ${OSA_VERSION} == "10.2" ]; then \
         wget https://www.isdc.unige.ch/integral/download/osa/sw/10.2/osa10.2-bin-linux64.tar.gz && \
         tar xvzf osa10.2-bin-linux64.tar.gz && \
         rm -fv osa10.2-bin-linux64.tar.gz && \
         mv osa10.2 osa; \
     else \
-        wget https://www.isdc.unige.ch/~savchenk/gitlab-ci/savchenk/osa-build-binary-tarball/CentOS_7.5.1804_x86_64/${OSA_VERSION}/build-latest/osa-${OSA_VERSION}-CentOS_7.5.1804_x86_64.tar.gz && \
+        wget https://www.isdc.unige.ch/~savchenk/gitlab-ci/integral/build/osa-build-binary-tarball/CentOS_7.5.1804_x86_64/${OSA_VERSION}/build-latest/osa-${OSA_VERSION}-CentOS_7.5.1804_x86_64.tar.gz && \
         tar xvzf osa-${OSA_VERSION}-CentOS_7.5.1804_x86_64.tar.gz && \
         rm -fv osa-${OSA_VERSION}-CentOS_7.5.1804_x86_64.tar.gz && \
         mv osa11 osa; \
     fi 
 
-RUN wget https://www.isdc.unige.ch/integral/download/osa/cat/osa_cat-41.0.tar.gz && \
-    tar xvzf osa_cat-41.0.tar.gz && \
+ARG isdc_ref_cat_version=42.0
+
+RUN wget https://www.isdc.unige.ch/integral/download/osa/cat/osa_cat-${isdc_ref_cat_version}.tar.gz && \
+    tar xvzf osa_cat-${isdc_ref_cat_version}.tar.gz && \
     mkdir -pv /data/ && \
-    mv osa_cat-41.0/cat /data/ && \
-    rm -rf osa_cat-41.0
+    mv osa_cat-${isdc_ref_cat_version}/cat /data/ && \
+    rm -rf osa_cat-${isdc_ref_cat_version}
 
 ADD init.sh /init.sh
 

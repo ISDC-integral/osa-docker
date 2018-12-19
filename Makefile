@@ -1,6 +1,7 @@
-OSA_VERSION?=$(shell curl https://www.isdc.unige.ch/~savchenk/gitlab-ci/savchenk/osa-build-tarball/CentOS_7.5.1804_x86_64/latest/latest/osa-version-ref.txt)
+OSA_VERSION?=$(shell curl https://www.isdc.unige.ch/~savchenk/gitlab-ci/integral/build/osa-build-tarball/CentOS_7.5.1804_x86_64/latest/latest/osa-version-ref.txt)
+ISDC_REF_CAT_VERSION?=42.0
 
-IMAGE?=integralsw/osa:${OSA_VERSION}
+IMAGE?=integralsw/osa:${OSA_VERSION}-refcat-${ISDC_REF_CAT_VERSION}
 IMAGE_LATEST?=integralsw/osa:latest
 
 push: build
