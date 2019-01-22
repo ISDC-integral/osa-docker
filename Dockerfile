@@ -61,5 +61,11 @@ RUN wget https://www.isdc.unige.ch/integral/download/osa/cat/osa_cat-${isdc_ref_
     mv osa_cat-${isdc_ref_cat_version}/cat /data/ && \
     rm -rf osa_cat-${isdc_ref_cat_version}
 
+RUN wget http://ds9.si.edu/download/centos7/ds9.centos7.8.0.1.tar.gz && \
+    tar xvfz ds9.centos7.8.0.1.tar.gz && \
+    chmod a+x ds9 && \
+    mv ds9 /usr/local/bin && \
+    rm -f ds9.centos7.8.0.1.tar.gz
+
 ADD init.sh /init.sh
 
