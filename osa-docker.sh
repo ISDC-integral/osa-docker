@@ -8,7 +8,8 @@ COMMAND=$@
 echo "OSA_VERSION == ${OSA_VERSION:=latest}"
 echo "OSA_DOCKER_IMAGE == ${OSA_DOCKER_IMAGE:=integralsw/osa:${OSA_VERSION}}"
 echo "OSA_DOCKER_PULL == \"${OSA_DOCKER_PULL:=yes}\""
-[ "$OSA_DOCKER_PULL" ==  "yes" ] && {
+
+[ "x$OSA_DOCKER_PULL" == "xyes" ] && {
     echo "will update image (set OSA_DOCKER_PULL to anything but \"yes\" to stop this)"
     docker pull $OSA_DOCKER_IMAGE
 }
@@ -16,7 +17,7 @@ echo "OSA_DOCKER_PULL == \"${OSA_DOCKER_PULL:=yes}\""
 echo "."
 echo "."
 echo "REP_BASE_PROD: ${REP_BASE_PROD:?please set this variable to the current data location}"
-echo "CURRENT_IC: ${CURRENT_IC:?please set this variable to the current IC location (could be REP_BASE_PROD, but we would not like to assume...)}"
+echo "CURRENT_IC: ${CURRENT_IC:=$REP_BASE_PROD}"
 echo "using WORKDIR: ${WORKDIR:=$PWD}"
 
 
