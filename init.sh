@@ -1,4 +1,5 @@
-export HOME=${HOME_OVERRRIDE:-/home/integral}
+export HOME=${HOME_OVERRRIDE:-/tmp/home}
+mkdir -pv $HOME
 
 export HEADAS=/opt/heasoft/x86_64-pc-linux-gnu-libc2.17/
 source $HEADAS/headas-init.sh

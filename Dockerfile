@@ -1,4 +1,4 @@
-FROM centos
+FROM centos:7
 
 RUN yum -y install epel-release
 RUN yum -y update
@@ -38,7 +38,8 @@ RUN cd /opt && \
 
 # OSA 
 
-ARG OSA_VERSION
+ARG OSA_VERSION=11.1-3-g87cee807-20200410-144247
+ARG OSA_PLATFORM=CentOS_7.7.1908_x86_64
 
 RUN cd /opt/ && \
     if [ ${OSA_VERSION} == "10.2" ]; then \
@@ -47,9 +48,9 @@ RUN cd /opt/ && \
         rm -fv osa10.2-bin-linux64.tar.gz && \
         mv osa10.2 osa; \
     else \
-        wget https://www.isdc.unige.ch/~savchenk/gitlab-ci/integral/build/osa-build-binary-tarball/CentOS_7.5.1804_x86_64/${OSA_VERSION}/build-latest/osa-${OSA_VERSION}-CentOS_7.5.1804_x86_64.tar.gz && \
-        tar xvzf osa-${OSA_VERSION}-CentOS_7.5.1804_x86_64.tar.gz && \
-        rm -fv osa-${OSA_VERSION}-CentOS_7.5.1804_x86_64.tar.gz && \
+        wget https://www.isdc.unige.ch/~savchenk/gitlab-ci/integral/build/osa-build-binary-tarball/${OSA_PLATFORM}/${OSA_VERSION}/build-latest/osa-${OSA_VERSION}-${OSA_PLATFORM}.tar.gz && \
+        tar xvzf osa-${OSA_VERSION}-*.tar.gz && \
+        rm -fv osa-${OSA_VERSION}-*.tar.gz && \
         mv osa11 osa; \
     fi 
 
@@ -61,11 +62,11 @@ RUN wget https://www.isdc.unige.ch/integral/download/osa/cat/osa_cat-${isdc_ref_
     mv osa_cat-${isdc_ref_cat_version}/cat /data/ && \
     rm -rf osa_cat-${isdc_ref_cat_version}
 
-RUN wget http://ds9.si.edu/download/centos7/ds9.centos7.8.0.1.tar.gz && \
-    tar xvfz ds9.centos7.8.0.1.tar.gz && \
-    chmod a+x ds9 && \
-    mv ds9 /usr/local/bin && \
-    rm -f ds9.centos7.8.0.1.tar.gz
+#RUN wget http://ds9.si.edu/download/centos7/ds9.centos7.8.0.1.tar.gz && \
+#    tar xvfz ds9.centos7.8.0.1.tar.gz && \
+#    chmod a+x ds9 && \
+#    mv ds9 /usr/local/bin && \
+#    rm -f ds9.centos7.8.0.1.tar.gz
 
 ADD init.sh /init.sh
 
