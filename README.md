@@ -1,3 +1,9 @@
+# Official INTEGRAL OSA Docker
+
+https://hub.docker.com/repository/docker/integralsw/osa/
+
+example usage:
+
 ```bash
 export CURRENT_IC=/isdc/arc/rev_3
 export REP_BASE_PROD=/isdc/arc/rev_3/
