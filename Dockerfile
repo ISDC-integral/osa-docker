@@ -20,21 +20,23 @@ RUN ln -s /usr/lib64/libpcre.so.1 /usr/lib64/libpcre.so.0
 RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh | bash && yum -y install git-lfs
 RUN cp -fv /usr/bin/gfortran /usr/bin/g95
 
-
-# root
-
-RUN cd /opt && \
-    wget https://root.cern.ch/download/root_v5.34.26.Linux-slc6_amd64-gcc4.4.tar.gz && \
-    tar xvzf root_v5.34.26.Linux-slc6_amd64-gcc4.4.tar.gz && \
-    rm -f root_v5.34.26.Linux-slc6_amd64-gcc4.4.tar.gz 
+ADD init.sh /init.sh
+ADD init.d /init.d
 
 # heasoft
 
+ARG HEASOFT_PLATFORM=CentOS_7.5.1804_x86_64
+
 RUN cd /opt && \
-    wget https://www.isdc.unige.ch/~savchenk/gitlab-ci/savchenk/osa-build-heasoft-binary-tarball/CentOS_7.5.1804_x86_64/heasoft-CentOS_7.5.1804_x86_64.tar.gz && \
-    tar xvzf heasoft-CentOS_7.5.1804_x86_64.tar.gz && \
+    wget -q https://www.isdc.unige.ch/~savchenk/gitlab-ci/savchenk/osa-build-heasoft-binary-tarball/${HEASOFT_PLATFORM}/heasoft-${HEASOFT_PLATFORM}.tar.gz && \
+    tar xzf heasoft-*.tar.gz && \
     pwd && \
-    rm -fv  heasoft-CentOS_7.5.1804_x86_64.tar.gz
+    rm -fv heasoft-*.tar.gz && \
+    echo $'export HEADAS=/opt/heasoft/x86_64-pc-linux-gnu-libc2.17/\n\
+          source $HEADAS/headas-init.sh' > /init.d/10-heasoft.sh
+
+RUN cat /init.d/10-heasoft.sh
+
 
 # OSA 
 
@@ -43,30 +45,36 @@ ARG OSA_PLATFORM=CentOS_7.7.1908_x86_64
 
 RUN cd /opt/ && \
     if [ ${OSA_VERSION} == "10.2" ]; then \
-        wget https://www.isdc.unige.ch/integral/download/osa/sw/10.2/osa10.2-bin-linux64.tar.gz && \
-        tar xvzf osa10.2-bin-linux64.tar.gz && \
+        wget -q https://www.isdc.unige.ch/integral/download/osa/sw/10.2/osa10.2-bin-linux64.tar.gz && \
+        tar xzf osa10.2-bin-linux64.tar.gz && \
         rm -fv osa10.2-bin-linux64.tar.gz && \
         mv osa10.2 osa; \
     else \
-        wget https://www.isdc.unige.ch/~savchenk/gitlab-ci/integral/build/osa-build-binary-tarball/${OSA_PLATFORM}/${OSA_VERSION}/build-latest/osa-${OSA_VERSION}-${OSA_PLATFORM}.tar.gz && \
-        tar xvzf osa-${OSA_VERSION}-*.tar.gz && \
+        wget -q https://www.isdc.unige.ch/~savchenk/gitlab-ci/integral/build/osa-build-binary-tarball/${OSA_PLATFORM}/${OSA_VERSION}/build-latest/osa-${OSA_VERSION}-${OSA_PLATFORM}.tar.gz && \
+        tar xzf osa-${OSA_VERSION}-*.tar.gz && \
         rm -fv osa-${OSA_VERSION}-*.tar.gz && \
         mv osa11 osa; \
-    fi 
+    fi && \
+    echo $'export ISDC_REF_CAT=/data/cat/hec/gnrl_refr_cat_0042.fits #TODO: use a variable, substitute from build time\n\
+          export ISDC_OMC_CAT=/data/cat/omc/omc_refr_cat_0005.fits\n\
+          export REP_BASE_PROD=/data\n\
+          export ISDC_ENV=/opt/osa\n\
+          source $ISDC_ENV/bin/isdc_init_env.sh' > /init.d/20-osa.sh
+
+
 
 ARG isdc_ref_cat_version=42.0
 
-RUN wget https://www.isdc.unige.ch/integral/download/osa/cat/osa_cat-${isdc_ref_cat_version}.tar.gz && \
+RUN wget -q https://www.isdc.unige.ch/integral/download/osa/cat/osa_cat-${isdc_ref_cat_version}.tar.gz && \
     tar xvzf osa_cat-${isdc_ref_cat_version}.tar.gz && \
     mkdir -pv /data/ && \
     mv osa_cat-${isdc_ref_cat_version}/cat /data/ && \
     rm -rf osa_cat-${isdc_ref_cat_version}
 
-#RUN wget http://ds9.si.edu/download/centos7/ds9.centos7.8.0.1.tar.gz && \
-#    tar xvfz ds9.centos7.8.0.1.tar.gz && \
-#    chmod a+x ds9 && \
-#    mv ds9 /usr/local/bin && \
-#    rm -f ds9.centos7.8.0.1.tar.gz
+RUN wget -q http://ds9.si.edu/download/centos7/ds9.centos7.8.0.1.tar.gz && \
+    tar xvfz ds9.centos7.8.0.1.tar.gz && \
+    chmod a+x ds9 && \
+    mv ds9 /usr/local/bin && \
+    rm -f ds9.centos7.8.0.1.tar.gz
 
-ADD init.sh /init.sh
-
+ADD tests /tests

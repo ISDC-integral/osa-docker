@@ -1,17 +1,8 @@
-export HOME=${HOME_OVERRRIDE:-/tmp/home}
-mkdir -pv $HOME
 
-export HEADAS=/opt/heasoft/x86_64-pc-linux-gnu-libc2.17/
-source $HEADAS/headas-init.sh
+for fn in $(ls /init.d/* | sort); do
+    echo "found init file: $fn"
+    source $fn
+done
 
-export ISDC_REF_CAT=/data/cat/hec/gnrl_refr_cat_0042.fits #TODO: use a variable, substitute from build time
-export ISDC_OMC_CAT=/data/cat/omc/omc_refr_cat_0005.fits
-export REP_BASE_PROD=/data
-
-export ISDC_ENV=/opt/osa
-
-source $ISDC_ENV/bin/isdc_init_env.sh
-
-source /opt/root/bin/thisroot.sh
 
 

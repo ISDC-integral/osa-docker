@@ -16,3 +16,6 @@ build: Dockerfile
 pull:
 	docker pull $(IMAGE) 
 	docker pull $(IMAGE_LATEST) 
+
+test: build
+	docker run --user $(shell id -u) $(IMAGE) bash -c 'cd /tests; ls -ltor; make'
