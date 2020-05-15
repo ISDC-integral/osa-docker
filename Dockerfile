@@ -55,7 +55,7 @@ RUN cd /opt/ && \
         rm -fv osa-${OSA_VERSION}-*.tar.gz && \
         mv osa11 osa; \
     fi && \
-    echo $'export ISDC_REF_CAT=/data/cat/hec/gnrl_refr_cat_0042.fits #TODO: use a variable, substitute from build time\n\
+    echo $'export ISDC_REF_CAT=/data/cat/hec/gnrl_refr_cat_0043.fits #TODO: use a variable, substitute from build time\n\
           export ISDC_OMC_CAT=/data/cat/omc/omc_refr_cat_0005.fits\n\
           export REP_BASE_PROD=/data\n\
           export ISDC_ENV=/opt/osa\n\
@@ -63,7 +63,7 @@ RUN cd /opt/ && \
 
 
 
-ARG isdc_ref_cat_version=42.0
+ARG isdc_ref_cat_version=43.0
 
 RUN wget -q https://www.isdc.unige.ch/integral/download/osa/cat/osa_cat-${isdc_ref_cat_version}.tar.gz && \
     tar xvzf osa_cat-${isdc_ref_cat_version}.tar.gz && \
