@@ -42,7 +42,7 @@ docker run \
 
 . init.sh
 
-cd \$HOME
+cd /home/integral
 
 echo -e '\\e[31mrunning\\e[37m $COMMAND\\e[0m'
 
