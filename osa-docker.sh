@@ -40,9 +40,11 @@ docker run \
     --rm -it  --user $(id -u) \
         ${OSA_DOCKER_IMAGE} bash -c "
 
+export HOME_OVERRRIDE=/home/integral
+
 . init.sh
 
-cd /home/integral
+cd \$HOME
 
 echo -e '\\e[31mrunning\\e[37m $COMMAND\\e[0m'
 
