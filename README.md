@@ -2,6 +2,8 @@
 
 https://hub.docker.com/repository/docker/integralsw/osa/
 
+[![Docker Pulls](https://img.shields.io/docker/pulls/integralsw/osa.svg)](https://hub.docker.com/repository/docker/integralsw/osa/)
+
 example usage:
 
 ```bash
