@@ -37,7 +37,7 @@ docker run \
     -v $REP_BASE_PROD/aux:/data/aux:ro \
     -v $CURRENT_IC/ic:/data/ic:ro \
     -v $CURRENT_IC/idx:/data/idx:ro \
-    --rm -it  --user $(id -u) \
+    --rm -it  --user $(id -u) --entrypoint='' \
         ${OSA_DOCKER_IMAGE} bash -c "
 
 export HOME_OVERRRIDE=/home/integral
@@ -45,6 +45,9 @@ export HOME_OVERRRIDE=/home/integral
 . init.sh
 
 cd \$HOME
+
+ln -s /data/ic
+ln -s /data/idx
 
 echo -e '\\e[31mrunning\\e[37m $COMMAND\\e[0m'
 
