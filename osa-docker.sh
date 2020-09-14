@@ -52,4 +52,7 @@ ln -s /data/idx
 echo -e '\\e[31mrunning\\e[37m $COMMAND\\e[0m'
 
 $COMMAND
+
+rm \$HOME/ic
+rm \$HOME/idx
 "
