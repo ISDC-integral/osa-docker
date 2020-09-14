@@ -45,7 +45,7 @@ export HOME_OVERRRIDE=/home/integral
 . init.sh
 
 cd \$HOME
-
+rm -f ic idx
 ln -s /data/ic
 ln -s /data/idx
 
