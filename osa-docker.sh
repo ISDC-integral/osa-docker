@@ -22,7 +22,8 @@ echo "using WORKDIR: ${WORKDIR:=$PWD}"
 
 
 for directory in "$REP_BASE_PROD/scw" "$REP_BASE_PROD/aux" "$CURRENT_IC/ic" "$CURRENT_IC/idx" "$WORKDIR"; do
-    [ -d $directory ] || { echo "directory \"$directory\" should exist"; exit 1; }
+    [ -h $directory ] || { echo -e "\033[033mWARNING: directory \"$directory\" is a symlink, which may break since inside the container the filesystem layout is different\033[0m"; }
+    [ -d $directory ] || { echo -e "\033[31mERROR: directory \"$directory\" should exist\033[0m"; exit 1; }
 done
 
 [ -s /tmp/.X11-unix ] || { echo "no /tmp/.X11-unix? no X? not allowed!"; }
@@ -40,19 +41,25 @@ docker run \
     --rm -it  --user $(id -u) --entrypoint='' \
         ${OSA_DOCKER_IMAGE} bash -c "
 
+
+
 export HOME_OVERRRIDE=/home/integral
 
 . init.sh
 
+## check from isside now
+
+for directory in \$REP_BASE_PROD/scw \$REP_BASE_PROD/aux \$CURRENT_IC/ic \$CURRENT_IC/idx; do
+    [ -h \$directory ] || { echo -e \"\\033[033mWARNING: inside the container, directory \\\"\$directory\\\" exits, but is a symlink, which may break since inside the container the filesystem layout is different\\033[0m\"; }
+    [ -d \$directory ] || { echo -e \"\\033[31mERROR: inside the container, directory \\\"\$directory\\\" should exist\\033[0m\"; exit 1; }
+done
+
+## done
+
 cd \$HOME
-rm -f ic idx
-ln -s /data/ic
-ln -s /data/idx
 
 echo -e '\\e[31mrunning\\e[37m $COMMAND\\e[0m'
 
 $COMMAND
 
-rm \$HOME/ic
-rm \$HOME/idx
 "
