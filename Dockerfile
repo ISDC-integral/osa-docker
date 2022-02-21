@@ -55,11 +55,12 @@ RUN cd /opt/ && \
         rm -fv osa-${OSA_VERSION}-*.tar.gz && \
         mv osa11 osa; \
     fi && \
-    echo 'export ISDC_REF_CAT=/data/cat/hec/gnrl_refr_cat_0043.fits #TODO: use a variable, substitute from build time\n\
-          export ISDC_OMC_CAT=/data/cat/omc/omc_refr_cat_0005.fits\n\
-          export REP_BASE_PROD=/data\n\
-          export ISDC_ENV=/opt/osa\n\
-          source $ISDC_ENV/bin/isdc_init_env.sh' > /init.d/20-osa.sh
+    echo -e 'export ISDC_REF_CAT=/data/cat/hec/gnrl_refr_cat_0043.fits #TODO: use a variable, substitute from build time\n\
+export ISDC_OMC_CAT=/data/cat/omc/omc_refr_cat_0005.fits\n\
+export REP_BASE_PROD=/data\n\
+export CURRENT_IC=/data\n\
+export ISDC_ENV=/opt/osa\n\
+source $ISDC_ENV/bin/isdc_init_env.sh' > /init.d/20-osa.sh
 
 
 

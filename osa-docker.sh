@@ -47,7 +47,9 @@ export HOME_OVERRRIDE=/home/integral
 
 . init.sh
 
-## check from isside now
+## check from inside now
+
+echo REP_BASE_PROD=\$REP_BASE_PROD
 
 for directory in \$REP_BASE_PROD/scw \$REP_BASE_PROD/aux \$CURRENT_IC/ic \$CURRENT_IC/idx; do
     [ -h \$directory ] || { echo -e \"\\033[033mWARNING: inside the container, directory \\\"\$directory\\\" exists, but is a symlink, which may break since inside the container the filesystem layout is different\\033[0m\"; }
