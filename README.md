@@ -63,3 +63,9 @@ CURRENT_IC=/mnt/sshfs/isdc/isdc/arc/rev_3/ \
 
 Please beware that the filesystem as seen by the command in the container is not the same as in the host system. 
 The current directory is seen as `/home/integral`. Please see the helpful messsage.
+
+You can explore what is visible to the commands in docker like so:
+
+```
+./osa-docker.sh ls /home/integral
+```
