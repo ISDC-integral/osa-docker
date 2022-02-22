@@ -43,6 +43,7 @@ docker run \
 
 
 
+
 export HOME_OVERRRIDE=/home/integral
 
 . init.sh
@@ -59,6 +60,8 @@ done
 ## done
 
 cd \$HOME
+
+echo -e '\nplease beware that \\e[34m$WORKDIR\\e[0m is visible to commands in docker as \\e[34m/home/integral\\e[37m\\e[0m\n'
 
 echo -e '\\e[31mrunning\\e[37m $COMMAND\\e[0m'
 
