@@ -30,24 +30,36 @@ CURRENT_IC=/mnt/sshfs/isdc/isdc/arc/rev_3/ \
 
 The example above uses a single command. More complex operations can be stored in a script and executed a single command.
 But sometimes it's useful to run a multi-line command at once. It can be done by escaping the command separators (replacing `;` with `\;`) or 
-passing the command as an argument to bash, in single quotes line so:
+passing the command as an argument to bash, in single quotes line so.
+
+Consider this (WRONG!) example:
 
 ```
 REP_BASE_PROD=/mnt/sshfs/isdc/isdc/arc/rev_3/ \
 CURRENT_IC=/mnt/sshfs/isdc/isdc/arc/rev_3/ \
-    bash ./osa-docker.sh \
-        bash -c '
-            cd obs/my_obs;
-            export COMMONSCRIPT=1; 
-            export COMMONLOGFILE=+\$PWD/ibis_log.txt;
-                ibis_science_analysis \
-                    ogDOL="og_ibis.fits" startLevel="COR" endLevel="SPE" \
-                    SWITCH_disablePICsIT="YES" SWITCH_disableIsgri="NO" \
-                    IBIS_nregions_spe="1" IBIS_nbins_spe="27" \
-                    IBIS_energy_boundaries_spe="20 200" SCW2_cat_for_extract="isgri_srcl_res.fits[1]"
-        '
+    bash ./osa-docker.sh pwd; pwd
 ```
+
+Note that the first `pwd` will be run inside the docker, while the second `pwd` is a separate command, not passed to the `osa-docker.sh` script and run in the host system.
+
+Instead, this will run both `pwd` in the container
+
+```
+$ REP_BASE_PROD=/mnt/sshfs/isdc/isdc/arc/rev_3/ \
+CURRENT_IC=/mnt/sshfs/isdc/isdc/arc/rev_3/ \
+    bash ./osa-docker.sh pwd\; pwd
+```
+
+This will also work well:
+
+```
+$ REP_BASE_PROD=/mnt/sshfs/isdc/isdc/arc/rev_3/ \
+CURRENT_IC=/mnt/sshfs/isdc/isdc/arc/rev_3/ \
+    bash  ./osa-docker.sh bash -c 'pwd; pwd'
+```
+
 
 ## Please beware of the directory layout!
 
-Please beware that the filesystem as seen by the command in the container is not entirely 
+Please beware that the filesystem as seen by the command in the container is not the same as in the host system. 
+The current directory is seen as `/home/integral`. Please see the helpful messsage.
