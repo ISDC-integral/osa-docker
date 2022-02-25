@@ -11,6 +11,6 @@ for t in $(ls $PWD/test_*.sh); do
         TESTDIR=${TMPDIR:-/tmp}/${t//\//_}
         mkdir -pv $TESTDIR
         cd $TESTDIR
-        bash $t
+        bash $t 
     )
 done

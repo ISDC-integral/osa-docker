@@ -22,8 +22,14 @@ echo "using WORKDIR: ${WORKDIR:=$PWD}"
 
 
 for directory in "$REP_BASE_PROD/scw" "$REP_BASE_PROD/aux" "$CURRENT_IC/ic" "$CURRENT_IC/idx" "$WORKDIR"; do
-    [ -h $directory ] || { echo -e "\033[033mWARNING: directory \"$directory\" is a symlink, which may break since inside the container the filesystem layout is different\033[0m"; }
-    [ -d $directory ] || { echo -e "\033[31mERROR: directory \"$directory\" should exist\033[0m"; exit 1; }
+    if [ -L $directory ] ; then 
+	    echo -e "\033[033mWARNING: directory \"$directory\" is a symlink, which may break since inside the container the filesystem layout is different\033[0m"; 
+    fi
+
+    if [ ! -d $directory ] ; then 
+	    echo -e "\033[31mERROR: directory \"$directory\" should exist\033[0m"
+	    exit 1
+    fi
 done
 
 [ -s /tmp/.X11-unix ] || { echo "no /tmp/.X11-unix? no X? not allowed!"; }
@@ -50,11 +56,15 @@ export HOME_OVERRRIDE=/home/integral
 
 ## check from inside now
 
-echo REP_BASE_PROD=\$REP_BASE_PROD
-
-for directory in \$REP_BASE_PROD/scw \$REP_BASE_PROD/aux \$CURRENT_IC/ic \$CURRENT_IC/idx; do
-    [ -h \$directory ] || { echo -e \"\\033[033mWARNING: inside the container, directory \\\"\$directory\\\" exists, but is a symlink, which may break since inside the container the filesystem layout is different\\033[0m\"; }
-    [ -d \$directory ] || { echo -e \"\\033[31mERROR: inside the container, directory \\\"\$directory\\\" should exist\\033[0m\"; exit 1; }
+for directory in /data/scw /data/aux /data/ic /data/idx; do
+    if [ -L \$directory ] ; then 
+	echo -e \"\\033[033mWARNING: inside the container, directory \\\"\$directory\\\" exits, but is a symlink, which may break since inside the container the filesystem layout is different\\033[0m\"
+    fi
+    ls -ldA \$directory
+    if [ ! -d \$directory ] ; then  
+	    echo -e \"\\033[31mERROR: inside the container, directory \\\"\$directory\\\" should exist\\033[0m\"
+	    exit 1;
+    fi
 done
 
 ## done

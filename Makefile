@@ -12,7 +12,7 @@ push: build
 	docker push $(IMAGE_LATEST) 
 
 build: Dockerfile
-	docker build --build-arg OSA_VERSION=${OSA_VERSION} --build-arg OSA_PLATFORM=$(OSA_PLATFORM) . -t $(IMAGE) 
+	docker build --build-arg isdc_ref_cat_version=${ISDC_REF_CAT_VERSION} --build-arg OSA_VERSION=${OSA_VERSION} --build-arg OSA_PLATFORM=$(OSA_PLATFORM) . -t $(IMAGE) 
 	docker tag $(IMAGE) $(IMAGE_LATEST) 
 
 pull:
