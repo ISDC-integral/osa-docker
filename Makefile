@@ -37,3 +37,7 @@ get-test-data:
 test-slow: get-test-ic get-test-data build
 	REP_BASE_PROD=$(PWD)/data CURRENT_IC=$(PWD)/current-ic \
 		      ./osa-docker.sh make -C /tests run-slow
+
+test-mimosa: get-test-ic get-test-data build
+	REP_BASE_PROD=$(PWD)/data CURRENT_IC=$(PWD)/current-ic \
+		      ./osa-docker.sh make -C /tests run-mimosa
