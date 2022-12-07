@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# note that this is a fixed copy of osa-container.sh . Please use osa-container.sh
+
 #set -xe
 
 COMMAND=$@
