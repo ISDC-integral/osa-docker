@@ -1,6 +1,7 @@
 #!/bin/bash
 
-set -e
+# set -ex
+set -ex
 
 source /init.sh
 
@@ -8,9 +9,15 @@ echo $REP_BASE_PROD
 echo $CURRENT_IC
 
 
+rm -fv aux cat ic idx scw
 ln -s /data/* .
 
-ls $PWD/scw/*/*/swg.fits > scw.idx
+ls -l scw
+
+ls $PWD/scw/0665/0665002*/swg.fits* | head -1 > scw.idx
+
+
+cat scw.idx
 
 export COMMONLOGFILE=+$PWD/commonlog.txt
 export COMMONSCRIPT=1
@@ -30,5 +37,6 @@ dal_list fulldols=yes dol=$PWD/og_ibis.fits
 
 echo $PFILES
 
-strace -e open ibis_science_analysis \
+# strace -e open 
+ibis_science_analysis \
     endLevel=LCR

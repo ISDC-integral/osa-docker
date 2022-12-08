@@ -19,8 +19,9 @@ pull:
 	docker pull $(IMAGE) 
 	docker pull $(IMAGE_LATEST) 
 
-test: build
-	docker run --user $(shell id -u) $(IMAGE) bash -c 'cd /tests; ls -ltor; make'
+test: 
+	bash osa-container.sh docker make -C /tests
+	bash osa-container.sh singularity make -C /tests
 
 # full analysis test
 

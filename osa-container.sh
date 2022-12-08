@@ -9,12 +9,8 @@ COMMAND=$@
 
 echo "OSA_VERSION == ${OSA_VERSION:=latest}"
 echo "OSA_DOCKER_IMAGE == ${OSA_DOCKER_IMAGE:=integralsw/osa:${OSA_VERSION}}"
+echo "OSA_SINGULARITY_IMAGE == ${OSA_SINGULARITY_IMAGE:=integralsw-osa-${OSA_VERSION}.sif}"
 echo "OSA_DOCKER_PULL == \"${OSA_DOCKER_PULL:=yes}\""
-
-[ "x$OSA_DOCKER_PULL" == "xyes" ] && {
-    echo "will update image (set OSA_DOCKER_PULL to anything but \"yes\" to stop this)"
-    docker pull $OSA_DOCKER_IMAGE
-}
 
 echo "."
 echo "."
@@ -38,32 +34,56 @@ done
 
 mkdir -pv $WORKDIR/pfiles
 
+function maybe_pull() {
+    [ "x$OSA_DOCKER_PULL" == "xyes" ] && {
+        echo "will update image (set OSA_DOCKER_PULL to anything but \"yes\" to stop this)"
+        docker pull $OSA_DOCKER_IMAGE
+    }
+}
+
+function mount_env_args() {
+    mount_flag=${1:?}
+    
+    echo --env DISPLAY=$DISPLAY \
+         $mount_flag /tmp/.X11-unix:/tmp/.X11-unix \
+         $mount_flag $WORKDIR:/home/integral \
+         $mount_flag $REP_BASE_PROD/scw:/data/scw:ro \
+         $mount_flag $REP_BASE_PROD/aux:/data/aux:ro \
+         $mount_flag $CURRENT_IC/ic:/data/ic:ro \
+         $mount_flag $CURRENT_IC/idx:/data/idx:ro
+}
+
 
 function run-docker() {
-    bashcmd=$@
+    bashcmd="$@"
+
+    maybe_pull
 
     docker run \
-        -e DISPLAY=$DISPLAY \
-        -v /tmp/.X11-unix:/tmp/.X11-unix \
-        -v $WORKDIR:/home/integral \
-        -v $REP_BASE_PROD/scw:/data/scw:ro \
-        -v $REP_BASE_PROD/aux:/data/aux:ro \
-        -v $CURRENT_IC/ic:/data/ic:ro \
-        -v $CURRENT_IC/idx:/data/idx:ro \
+        $( mount_env_args -v ) \
         --rm -it  --user $(id -u) --entrypoint='' \
-            ${OSA_DOCKER_IMAGE} $bashcmd
+            ${OSA_DOCKER_IMAGE} bash -c "$bashcmd"
 }
 
 
 function run-singularity() {
-    bashcmd=${1:?}
+    bashcmd="$@"
 
-    echo "WIP!"
+    singularity exec \
+        --no-home \
+        $( mount_env_args -B ) \
+            ${OSA_SINGULARITY_IMAGE} bash -c "$bashcmd"
+}
+
+
+function run-build-singularity() {
+    maybe_pull
+
+    singularity build $OSA_SINGULARITY_IMAGE docker-daemon://$OSA_DOCKER_IMAGE
 }
 
                 
-$runmode bash -c "
-
+$runmode "
     export HOME_OVERRRIDE=/home/integral
 
     . init.sh
