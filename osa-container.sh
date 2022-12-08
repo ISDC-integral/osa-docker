@@ -9,7 +9,13 @@ shift
 COMMAND=$@
 
 
-echo "OSA_VERSION == ${OSA_VERSION:=latest}"
+echo "OSA_VERSION == ${OSA_VERSION:=discover}"
+
+if [ $OSA_VERSION == "discover" ]; then
+    OSA_VERSION=$(curl https://www.isdc.unige.ch/~savchenk/gitlab-ci/integral/build/osa-build-tarball/cross-platform/latest/latest/osa-version-ref.txt)
+    echo "discovered OSA_VERSION == ${OSA_VERSION:=discover}"
+fi
+
 echo "OSA_DOCKER_IMAGE == ${OSA_DOCKER_IMAGE:=integralsw/osa:${OSA_VERSION}}"
 echo "OSA_SINGULARITY_IMAGE == ${OSA_SINGULARITY_IMAGE:=integralsw-osa-${OSA_VERSION}.sif}"
 echo "OSA_DOCKER_PULL == \"${OSA_DOCKER_PULL:=yes}\""
