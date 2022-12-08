@@ -1,6 +1,8 @@
 #!/bin/bash
 
-set -xe
+if [ "$DEBUG" == "yes" ]; then
+    set -xe
+fi
 
 runmode=run-${1:?please specify mode in the first argument: docker or singularity}
 shift
