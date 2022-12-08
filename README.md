@@ -10,8 +10,8 @@ example usage:
 export CURRENT_IC=/isdc/arc/rev_3
 export REP_BASE_PROD=/isdc/arc/rev_3/
 
-./osa-docker.sh og_create scw.list IBIS test ./
-./osa-docker.sh cd obs/test\; ibis_science_analysis
+./osa-container.sh docker og_create scw.list IBIS test ./
+./osa-container.sh docker cd obs/test\; ibis_science_analysis
 
 ```
 
@@ -21,7 +21,8 @@ useful single-line command, also disabling automatic image pull:
 OSA_DOCKER_PULL=no \
 REP_BASE_PROD=/mnt/sshfs/isdc/isdc/arc/rev_3/ \
 CURRENT_IC=/mnt/sshfs/isdc/isdc/arc/rev_3/ \
-    bash <(curl https://gitlab.astro.unige.ch/savchenk/osa-docker/raw/master/osa-docker.sh) \
+    bash <(curl https://gitlab.astro.unige.ch/savchenk/osa-docker/raw/master/osa-container.sh) \
+        docker \
         ibis_science_analysis
 ```
 
@@ -67,5 +68,6 @@ The current directory is seen as `/home/integral`. Please see the helpful messsa
 You can explore what is visible to the commands in docker like so:
 
 ```
-./osa-docker.sh ls /home/integral
+./osa-container.sh docker ls /home/integral
+./osa-container.sh singularity ls /home/integral
 ```

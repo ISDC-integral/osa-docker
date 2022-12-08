@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# note that this is a fixed copy of osa-container.sh . Please use osa-container.sh
+echo -e '\033[31m note that this is a fixed copy of osa-container.sh . Please use osa-container.sh \033[0m'
 
 #set -xe
 
