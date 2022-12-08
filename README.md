@@ -27,7 +27,7 @@ CURRENT_IC=/mnt/sshfs/isdc/isdc/arc/rev_3/ \
 ```
 
 
-## Running a mult-line command
+## Running a multi-line command
 
 The example above uses a single command. More complex operations can be stored in a script and executed a single command.
 But sometimes it's useful to run a multi-line command at once. It can be done by escaping the command separators (replacing `;` with `\;`) or 
@@ -69,5 +69,26 @@ You can explore what is visible to the commands in docker like so:
 
 ```
 ./osa-container.sh docker ls /home/integral
+```
+
+## Using singularity instead of docker
+
+You can use a singularity image which you can build yourself from docker image with this command:
+
+```
+./osa-container.sh build-singularity
+```
+
+Then, this command:
+
+```
+./osa-container.sh docker ls /home/integral
+```
+
+will produce the same result as this one:
+
+```
 ./osa-container.sh singularity ls /home/integral
 ```
+
+An advantage of singularity is that it requires less rights on the host, and hence is usually available on HPC clusters (unlike docker).
