@@ -59,6 +59,21 @@ CURRENT_IC=/mnt/sshfs/isdc/isdc/arc/rev_3/ \
     bash  ./osa-docker.sh bash -c 'pwd; pwd'
 ```
 
+## Singularity container
+
+Singularity container can be run without root advanced privileges, and is usually available on HPC clusters.
+
+You may need to install singularity, e.g. from conda:
+
+```
+$ conda install singularity -c conda-forge
+```
+
+then, you need to build singularity image:
+
+```
+$ ./osa-container.sh build-singularity
+```
 
 ## Please beware of the directory layout!
 
