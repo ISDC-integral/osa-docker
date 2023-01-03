@@ -75,9 +75,17 @@ then, you need to build singularity image:
 $ ./osa-container.sh build-singularity
 ```
 
+## More on directory locations
+
+In the convention of INTEGRAL OSA analysis `REP_BASE_PROD` contains `scw`, `ic`, `idx`, `aux`, `cat` directories. In ordinary analysis, some of them can be symlinks.
+When mounted into the container, symlinks do not work the same way.
+
+So when specifying `REP_BASE_PROD` variable, it is important that it contains actual data, not symlinks to it.
+Sometimes actual locations of `ic` and `idx` may be in a different place: since they are primarily associated with software and not with data. In this case, it is possible to specify `CURRENT_IC` variable to point to the directory with actual location of `ic` and `idx`.
+
 ## Please beware of the directory layout!
 
-Please beware that the filesystem as seen by the command in the container is not the same as in the host system. 
+Beware that the filesystem as seen by the command in the container is not the same as in the host system. 
 The current directory is seen as `/home/integral`. Please see the helpful messsage.
 
 You can explore what is visible to the commands in docker like so:
