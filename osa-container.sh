@@ -84,7 +84,20 @@ function run-singularity() {
 }
 
 
-function run-build-singularity() {
+function run-download-singularity-image() {
+    maybe_pull
+
+    wget https://www.isdc.unige.ch/~savchenk/singularity/$OSA_SINGULARITY_IMAGE -O $OSA_SINGULARITY_IMAGE
+}
+
+
+function run-upload-singularity-image() {
+    maybe_pull
+
+    scp $OSA_SINGULARITY_IMAGE login01.astro.unige.ch:/www/people/savchenk/public_html/singularity/
+}
+
+function run-build-singularity-image() {
     maybe_pull
 
     singularity build $OSA_SINGULARITY_IMAGE docker-daemon://$OSA_DOCKER_IMAGE

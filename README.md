@@ -72,7 +72,13 @@ $ conda install singularity -c conda-forge
 then, you need to build singularity image:
 
 ```
-$ ./osa-container.sh build-singularity
+$ ./osa-container.sh build-singularity-image
+```
+
+Instead of building the image, you can try to download it (but please beware that we do not maintain the same set of singularity image versions as the docker image versions, although we try to keep the latest version available):
+
+```
+$ ./osa-container.sh download-singularity-image
 ```
 
 ## More on directory locations
