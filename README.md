@@ -81,6 +81,29 @@ Instead of building the image, you can try to download it (but please beware tha
 $ ./osa-container.sh download-singularity-image
 ```
 
+## Choosing OSA version
+
+OSA version to use can be selected by setting `OSA_VERSION` variable, like:
+
+```bash
+$ export OSA_VERSION=11.2
+```
+
+or
+
+```bash
+$ export OSA_VERSION=10.2
+```
+
+For each new OSA version a new container can be built.
+Pre-built docker and singularity containers are provided for some versions, but much larger set of versions can be build from source (using `make build`).
+
+The default setting for `OSA_VERSION` is `current` - in this case, the latest patch version of OSA is used. While major and minor OSA versions (10.2, 11.1, etc) are distributed with accompanying announcements, small bug fixes and patches are introduced farily regularly.
+For example, this is full OSA version at the time of writing this: `11.2-2-g667521a3-20220403-190332`. It means it is two patches after `11.2`, as defined on April 4 2022. 
+
+It is advisable to use the current OSA version when possible, but if in doubt the last minor release can be used to check (`11.2` in the example above).
+
+
 ## More on directory locations
 
 In the convention of INTEGRAL OSA analysis `REP_BASE_PROD` contains `scw`, `ic`, `idx`, `aux`, `cat` directories. In ordinary analysis, some of them can be symlinks.
